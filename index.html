@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luana Wouters — Portfólio</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F7F4EF;
+    --surface: #FFFFFF;
+    --ink: #1A1714;
+    --ink2: #5A554E;
+    --ink3: #A09A91;
+    --accent: #C8563A;
+    --accent2: #3A6BC8;
+    --green: #2E7D5E;
+    --amber: #B07A1A;
+    --border: rgba(26,23,20,0.10);
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── EDIT TOOLBAR ── */
+  #edit-toolbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    background: var(--ink);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 2rem;
+    font-size: 13px;
+    transform: translateY(-100%);
+    transition: transform 0.25s;
+  }
+  #edit-toolbar.visible { transform: translateY(0); }
+  #edit-toolbar span { opacity: 0.6; }
+  .toolbar-actions { display: flex; gap: 8px; }
+  .tb-btn {
+    padding: 6px 16px;
+    border-radius: 6px;
+    border: none;
+    font-family: var(--font-body);
+    font-size: 13px;
+    cursor: pointer;
+    transition: opacity 0.15s;
+  }
+  .tb-btn:hover { opacity: 0.85; }
+  .tb-save { background: var(--accent); color: #fff; }
+  .tb-cancel { background: rgba(255,255,255,0.12); color: #fff; }
+
+  /* ── LAYOUT ── */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 2rem; }
+
+  /* ── HEADER ── */
+  header {
+    padding: 5rem 0 4rem;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -80px;
+    width: 360px; height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200,86,58,0.08), transparent 70%);
+    pointer-events: none;
+  }
+  .header-inner { display: flex; align-items: flex-end; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .header-left {}
+  .eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.75rem;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 7vw, 5rem);
+    line-height: 1.0;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 1.25rem;
+  }
+  h1 em { font-style: italic; color: var(--accent); }
+  .tagline {
+    font-size: 16px;
+    color: var(--ink2);
+    max-width: 520px;
+    line-height: 1.65;
+  }
+  .tags-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1.5rem; }
+  .tag {
+    font-size: 12px;
+    font-weight: 500;
+    padding: 5px 12px;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--ink2);
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .tag:hover { border-color: var(--accent); color: var(--accent); }
+  .header-right { text-align: right; }
+  .avatar-circle {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 28px;
+    display: flex; align-items: center; justify-content: center;
+    margin-left: auto;
+    margin-bottom: 12px;
+  }
+  .location { font-size: 13px; color: var(--ink3); }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(247,244,239,0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+    padding: 0;
+  }
+  .nav-inner { display: flex; gap: 0; overflow-x: auto; }
+  .nav-link {
+    padding: 14px 20px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink2);
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .nav-link:hover { color: var(--ink); border-color: var(--accent); }
+
+  /* ── SECTIONS ── */
+  section { padding: 4rem 0; border-bottom: 1px solid var(--border); }
+  section:last-of-type { border-bottom: none; }
+  .section-label {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .section-title {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+
+  /* ── SOBRE ── */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .about-text { font-size: 16px; color: var(--ink2); line-height: 1.8; }
+  .about-stats { display: flex; flex-direction: column; gap: 1rem; }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+  }
+  .stat-number {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat-label { font-size: 13px; color: var(--ink2); margin-top: 4px; }
+
+  /* ── EXPERIÊNCIA ── */
+  .exp-item {
+    display: grid;
+    grid-template-columns: 160px 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.4s, transform 0.4s;
+  }
+  .exp-item.visible { opacity: 1; transform: translateY(0); }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-meta { text-align: right; }
+  .exp-period { font-size: 13px; color: var(--ink3); font-weight: 500; line-height: 1.4; }
+  .exp-company { font-size: 13px; color: var(--ink3); margin-top: 4px; }
+  .exp-content {}
+  .exp-title {
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+  }
+  .exp-desc { font-size: 14px; color: var(--ink2); line-height: 1.7; }
+  .pillar-tag {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 100px;
+    margin-top: 10px;
+  }
+  .p-comunic { background: #EBF3FF; color: #185FA5; }
+  .p-impacto { background: #E8F5EE; color: #2E7D5E; }
+  .p-gestao  { background: #F0EDFE; color: #3C3489; }
+  .p-produto { background: #FDF3E3; color: #854F0B; }
+
+  /* ADD BUTTON */
+  .add-btn {
+    width: 100%;
+    padding: 14px;
+    border: 1.5px dashed var(--border);
+    border-radius: 10px;
+    background: none;
+    color: var(--ink3);
+    font-family: var(--font-body);
+    font-size: 13px;
+    cursor: pointer;
+    margin-top: 1.5rem;
+    transition: border-color 0.15s, color 0.15s;
+    display: none;
+  }
+  .editing .add-btn { display: block; }
+  .add-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── FORMAÇÃO ── */
+  .edu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+  .edu-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    opacity: 0;
+    transform: translateY(16px);
+    transition: opacity 0.4s, transform 0.4s;
+    position: relative;
+  }
+  .edu-card.visible { opacity: 1; transform: translateY(0); }
+  .edu-year { font-size: 11px; font-weight: 500; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+  .edu-course { font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 4px; }
+  .edu-inst { font-size: 13px; color: var(--ink2); }
+
+  /* ── COMPETÊNCIAS ── */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .skill-item {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    opacity: 0;
+    transform: translateY(12px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .skill-item.visible { opacity: 1; transform: translateY(0); }
+  .skill-name { font-size: 14px; font-weight: 500; margin-bottom: 8px; }
+  .skill-bar-bg { height: 3px; background: rgba(26,23,20,0.08); border-radius: 2px; }
+  .skill-bar { height: 3px; border-radius: 2px; background: var(--accent); transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+
+  /* ── CONTATO ── */
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: start; }
+  .contact-blurb { font-size: 16px; color: var(--ink2); line-height: 1.8; }
+  .contact-links { display: flex; flex-direction: column; gap: 10px; }
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 14px;
+    transition: border-color 0.15s;
+  }
+  .contact-link:hover { border-color: var(--accent); }
+  .contact-icon { width: 20px; height: 20px; color: var(--ink3); flex-shrink: 0; }
+
+  /* ── EDITABLE ── */
+  [contenteditable="true"] {
+    outline: none;
+    border-bottom: 2px solid var(--accent);
+    background: rgba(200,86,58,0.04);
+    border-radius: 2px;
+    padding: 0 2px;
+    cursor: text;
+  }
+  .remove-card-btn {
+    position: absolute;
+    top: 10px; right: 10px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 11px;
+    padding: 3px 8px;
+    color: var(--ink3);
+    cursor: pointer;
+    display: none;
+  }
+  .editing .remove-card-btn { display: block; }
+  .remove-exp-btn {
+    position: absolute;
+    top: 2rem; right: 0;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 11px;
+    padding: 3px 8px;
+    color: var(--ink3);
+    cursor: pointer;
+    display: none;
+  }
+  .editing .remove-exp-btn { display: block; }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 2rem 0;
+    text-align: center;
+    font-size: 12px;
+    color: var(--ink3);
+  }
+
+  /* ── EDIT FAB ── */
+  #edit-fab {
+    position: fixed;
+    bottom: 2rem; right: 2rem;
+    z-index: 150;
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    border-radius: 100px;
+    padding: 12px 22px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    transition: transform 0.15s, background 0.15s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  #edit-fab:hover { transform: scale(1.03); background: #333; }
+  #edit-fab.active { background: var(--accent); }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,23,20,0.4);
+    z-index: 300;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal-box {
+    background: var(--surface);
+    border-radius: 16px;
+    padding: 2rem;
+    width: 420px;
+    max-width: 92vw;
+    border: 1px solid var(--border);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.14);
+  }
+  .modal-box h3 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 400; margin-bottom: 1.25rem; }
+  .modal-box label { display: block; font-size: 12px; color: var(--ink2); margin-bottom: 4px; margin-top: 12px; }
+  .modal-box input, .modal-box textarea, .modal-box select {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 14px;
+  }
+  .modal-box textarea { min-height: 80px; resize: vertical; }
+  .modal-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 1.5rem; }
+  .modal-confirm { background: var(--accent); color: #fff; padding: 9px 20px; border: none; border-radius: 8px; font-family: var(--font-body); font-size: 14px; cursor: pointer; }
+  .modal-cancel  { background: none; color: var(--ink2); padding: 9px 16px; border: 1px solid var(--border); border-radius: 8px; font-family: var(--font-body); font-size: 14px; cursor: pointer; }
+
+  @media (max-width: 640px) {
+    h1 { font-size: 2.8rem; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; }
+    .exp-item { grid-template-columns: 1fr; }
+    .exp-meta { text-align: left; }
+    header { padding: 3rem 0 2.5rem; }
+  }
+
+  /* ── LOGOS STRIP ── */
+  .logos-strip {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 2.5rem;
+    align-items: center;
+  }
+  .logo-chip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 52px;
+    padding: 10px 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    text-decoration: none;
+    transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s;
+    flex-shrink: 0;
+  }
+  .logo-chip:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(200,86,58,0.10);
+  }
+  .logo-chip img {
+    height: 26px;
+    width: auto;
+    max-width: 100px;
+    object-fit: contain;
+    filter: grayscale(1);
+    opacity: 0.65;
+    transition: filter 0.18s, opacity 0.18s;
+    display: block;
+  }
+  .logo-chip:hover img {
+    filter: grayscale(0);
+    opacity: 1;
+  }
+  .logo-fallback {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--ink2);
+    white-space: nowrap;
+    align-items: center;
+    justify-content: center;
+  }
+  .logo-chip:hover .logo-fallback { color: var(--accent); }
+
+  .exp-item { scroll-margin-top: 80px; }
+
+  /* scroll animation delays */
+  .exp-item:nth-child(1) { transition-delay: 0s; }
+  .exp-item:nth-child(2) { transition-delay: 0.06s; }
+  .exp-item:nth-child(3) { transition-delay: 0.12s; }
+  .exp-item:nth-child(4) { transition-delay: 0.18s; }
+  .exp-item:nth-child(5) { transition-delay: 0.24s; }
+  .edu-card:nth-child(1) { transition-delay: 0s; }
+  .edu-card:nth-child(2) { transition-delay: 0.07s; }
+  .edu-card:nth-child(3) { transition-delay: 0.14s; }
+  .skill-item:nth-child(1) { transition-delay: 0s; }
+  .skill-item:nth-child(2) { transition-delay: 0.05s; }
+  .skill-item:nth-child(3) { transition-delay: 0.10s; }
+  .skill-item:nth-child(4) { transition-delay: 0.15s; }
+  .skill-item:nth-child(5) { transition-delay: 0.20s; }
+  .skill-item:nth-child(6) { transition-delay: 0.25s; }
+</style>
+</head>
+<body>
+
+<!-- EDIT TOOLBAR -->
+<div id="edit-toolbar">
+  <span>Modo de edição ativo — clique em qualquer texto para editar</span>
+  <div class="toolbar-actions">
+    <button class="tb-btn tb-cancel" onclick="cancelEditing()">Cancelar</button>
+    <button class="tb-btn tb-save" onclick="saveEditing()">Salvar</button>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="container">
+    <div class="nav-inner">
+      <a class="nav-link" href="#sobre">Sobre</a>
+      <a class="nav-link" href="#experiencia">Experiência</a>
+      <a class="nav-link" href="#formacao">Formação</a>
+      <a class="nav-link" href="#competencias">Competências</a>
+      <a class="nav-link" href="#contato">Contato</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HEADER -->
+<header>
+  <div class="container">
+    <div class="header-inner">
+      <div class="header-left">
+        <div class="eyebrow">Portfólio Profissional</div>
+        <h1>Luana<br><em>Wouters</em></h1>
+        <p class="tagline editable">Comunicação estratégica, Design e ESG — 10 anos conectando marcas a pessoas e propósito.</p>
+        <div class="tags-row">
+          <span class="tag">Social Media</span>
+          <span class="tag">ESG</span>
+          <span class="tag">Gestão de Projetos</span>
+          <span class="tag">UX/UI</span>
+          <span class="tag">Design</span>
+          <span class="tag">Planejamento</span>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="avatar-circle">LW</div>
+        <div class="location editable">João Pessoa, PB</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- SOBRE -->
+<section id="sobre">
+  <div class="container">
+    <div class="section-label">Sobre</div>
+    <div class="about-grid">
+      <div>
+        <p class="about-text editable">Graduada em Design, acumulo 10 anos de experiência nas áreas de comunicação e gestão de projetos. Atuo na interseção entre criatividade e impacto real — da produção de conteúdo digital ao planejamento estratégico de ESG em grandes empresas. Construo pontes entre narrativa, dados e propósito.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="stat-number editable">10</div>
+          <div class="stat-label">anos de experiência em comunicação e design</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number editable">5+</div>
+          <div class="stat-label">empresas de diferentes setores</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number editable">2+</div>
+          <div class="stat-label">anos à frente de projetos ESG</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIÊNCIA -->
+<section id="experiencia">
+  <div class="container">
+    <div class="section-label">Experiência</div>
+
+    <!-- LOGOS STRIP -->
+    <div class="logos-strip">
+      <a class="logo-chip" href="#exp-tsn" title="Agência TSN">
+        <img src="https://logo.clearbit.com/agenciatsn.com.br" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Agência TSN">
+        <span class="logo-fallback" style="display:none">TSN</span>
+      </a>
+      <a class="logo-chip" href="#exp-inhaus" title="Agência InHaus">
+        <img src="https://logo.clearbit.com/inhaus.com.br" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="InHaus">
+        <span class="logo-fallback" style="display:none">InHaus</span>
+      </a>
+      <a class="logo-chip" href="#exp-casasbahia" title="Grupo Casas Bahia">
+        <img src="https://logo.clearbit.com/grupocasasbahia.com.br" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Grupo Casas Bahia">
+        <span class="logo-fallback" style="display:none">Casas Bahia</span>
+      </a>
+      <a class="logo-chip" href="#exp-ios" title="Instituto da Oportunidade Social">
+        <img src="https://logo.clearbit.com/ios.org.br" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Instituto da Oportunidade Social">
+        <span class="logo-fallback" style="display:none">IOS</span>
+      </a>
+      <a class="logo-chip" href="#exp-eotica" title="eÓtica">
+        <img src="https://logo.clearbit.com/eotica.com.br" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="eÓtica">
+        <span class="logo-fallback" style="display:none">eÓtica</span>
+      </a>
+      <a class="logo-chip" href="#exp-privalia" title="Privalia">
+        <img src="https://logo.clearbit.com/privalia.com.br" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Privalia">
+        <span class="logo-fallback" style="display:none">Privalia</span>
+      </a>
+      <a class="logo-chip" href="#exp-ibmoda" title="Ibmoda">
+        <img src="https://logo.clearbit.com/ibmoda.com.br" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Ibmoda">
+        <span class="logo-fallback" style="display:none">Ibmoda</span>
+      </a>
+    </div>
+
+    <div id="exp-list">
+
+      <div class="exp-item" id="exp-tsn">
+        <button class="remove-exp-btn" onclick="this.closest('.exp-item').remove()">remover</button>
+        <div class="exp-meta">
+          <div class="exp-period editable">2024 – atual</div>
+          <div class="exp-company editable">Agência TSN<br>João Pessoa, PB</div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-title editable">Analista de Social Media Pleno</div>
+          <div class="exp-desc editable">Gestão estratégica de redes sociais para portfólio de clientes, produção de conteúdo, análise de métricas e campanhas digitais integradas.</div>
+          <span class="pillar-tag p-comunic">Comunicação & Conteúdo</span>
+        </div>
+      </div>
+
+      <div class="exp-item" id="exp-inhaus">
+        <button class="remove-exp-btn" onclick="this.closest('.exp-item').remove()">remover</button>
+        <div class="exp-meta">
+          <div class="exp-period editable">2023 – 2024</div>
+          <div class="exp-company editable">Agência InHaus</div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-title editable">Planner de Comunicação</div>
+          <div class="exp-desc editable">Planejamento estratégico de campanhas e comunicação integrada, alinhamento de briefings e coordenação de entregas criativas.</div>
+          <span class="pillar-tag p-gestao">Gestão & Estratégia</span>
+        </div>
+      </div>
+
+      <div class="exp-item" id="exp-casasbahia">
+        <button class="remove-exp-btn" onclick="this.closest('.exp-item').remove()">remover</button>
+        <div class="exp-meta">
+          <div class="exp-period editable">2021 – 2023</div>
+          <div class="exp-company editable">Grupo Casas Bahia</div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-title editable">Analista Plena – ESG</div>
+          <div class="exp-desc editable">Gestão de projetos de impacto socioambiental, elaboração de relatórios ESG, comunicação institucional e acompanhamento de indicadores de sustentabilidade.</div>
+          <span class="pillar-tag p-impacto">Impacto & Propósito</span>
+        </div>
+      </div>
+
+      <div class="exp-item" id="exp-ios">
+        <button class="remove-exp-btn" onclick="this.closest('.exp-item').remove()">remover</button>
+        <div class="exp-meta">
+          <div class="exp-period editable">2019 – 2021</div>
+          <div class="exp-company editable">Instituto da Oportunidade Social</div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-title editable">Analista de Comunicação</div>
+          <div class="exp-desc editable">Comunicação institucional e coordenação de projetos sociais voltados à inclusão e desenvolvimento profissional de jovens.</div>
+          <span class="pillar-tag p-impacto">Impacto & Propósito</span>
+        </div>
+      </div>
+
+      <div class="exp-item" id="exp-eotica">
+        <span id="exp-privalia" style="position:absolute;top:0"></span>
+        <span id="exp-ibmoda" style="position:absolute;top:0"></span>
+        <button class="remove-exp-btn" onclick="this.closest('.exp-item').remove()">remover</button>
+        <div class="exp-meta">
+          <div class="exp-period editable">2014 – 2019</div>
+          <div class="exp-company editable">eÓtica · Privalia · Ibmoda</div>
+        </div>
+        <div class="exp-content">
+          <div class="exp-title editable">Comunicação & E-commerce</div>
+          <div class="exp-desc editable">Produção de conteúdo, design e comunicação digital em empresas do setor de moda e varejo online, desenvolvendo identidade visual e estratégias de engajamento.</div>
+          <span class="pillar-tag p-produto">Produto & Experiência</span>
+        </div>
+      </div>
+
+    </div>
+    <button class="add-btn" onclick="openModal('exp')">+ Adicionar experiência</button>
+  </div>
+</section>
+
+<!-- FORMAÇÃO -->
+<section id="formacao">
+  <div class="container">
+    <div class="section-label">Formação</div>
+    <div class="edu-grid" id="edu-list">
+
+      <div class="edu-card">
+        <button class="remove-card-btn" onclick="this.closest('.edu-card').remove()">remover</button>
+        <div class="edu-year editable">2024</div>
+        <div class="edu-course editable">UX/UI Design</div>
+        <div class="edu-inst editable">UX Unicórnio</div>
+      </div>
+
+      <div class="edu-card">
+        <button class="remove-card-btn" onclick="this.closest('.edu-card').remove()">remover</button>
+        <div class="edu-year editable">2022</div>
+        <div class="edu-course editable">Curso de Extensão</div>
+        <div class="edu-inst editable">Fundação Getulio Vargas (FGV)</div>
+      </div>
+
+      <div class="edu-card">
+        <button class="remove-card-btn" onclick="this.closest('.edu-card').remove()">remover</button>
+        <div class="edu-year editable">ano</div>
+        <div class="edu-course editable">Graduação em Design</div>
+        <div class="edu-inst editable">Instituição · preencher</div>
+      </div>
+
+    </div>
+    <button class="add-btn" onclick="openModal('edu')">+ Adicionar formação</button>
+  </div>
+</section>
+
+<!-- COMPETÊNCIAS -->
+<section id="competencias">
+  <div class="container">
+    <div class="section-label">Competências</div>
+    <div class="skills-grid" id="skill-list">
+      <div class="skill-item"><div class="skill-name editable">Social Media</div><div class="skill-bar-bg"><div class="skill-bar" data-w="90" style="width:0%"></div></div></div>
+      <div class="skill-item"><div class="skill-name editable">Gestão de Projetos</div><div class="skill-bar-bg"><div class="skill-bar" data-w="85" style="width:0%"></div></div></div>
+      <div class="skill-item"><div class="skill-name editable">ESG & Sustentabilidade</div><div class="skill-bar-bg"><div class="skill-bar" data-w="80" style="width:0%"></div></div></div>
+      <div class="skill-item"><div class="skill-name editable">Design</div><div class="skill-bar-bg"><div class="skill-bar" data-w="85" style="width:0%"></div></div></div>
+      <div class="skill-item"><div class="skill-name editable">UX/UI</div><div class="skill-bar-bg"><div class="skill-bar" data-w="70" style="width:0%"></div></div></div>
+      <div class="skill-item"><div class="skill-name editable">Planejamento Estratégico</div><div class="skill-bar-bg"><div class="skill-bar" data-w="88" style="width:0%"></div></div></div>
+    </div>
+    <button class="add-btn" onclick="openModal('skill')">+ Adicionar competência</button>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section id="contato">
+  <div class="container">
+    <div class="section-label">Contato</div>
+    <div class="contact-grid">
+      <div>
+        <p class="contact-blurb editable">Aberta a novos projetos, colaborações e conversas sobre comunicação, ESG e impacto. Vamos conversar?</p>
+      </div>
+      <div class="contact-links">
+        <a class="contact-link" href="https://linkedin.com/in/luanawouters" target="_blank">
+          <svg class="contact-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101"/><path stroke-linecap="round" stroke-linejoin="round" d="M10.172 13.828a4 4 0 015.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1"/></svg>
+          <span class="editable">linkedin.com/in/luanawouters</span>
+        </a>
+        <div class="contact-link">
+          <svg class="contact-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
+          <span class="editable">seu@email.com</span>
+        </div>
+        <div class="contact-link">
+          <svg class="contact-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+          <span class="editable">João Pessoa, PB — Brasil</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <p>© 2025 Luana Wouters · Portfólio</p>
+  </div>
+</footer>
+
+<!-- EDIT FAB -->
+<button id="edit-fab" onclick="toggleEditing()">
+  <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg>
+  Editar portfólio
+</button>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal-box">
+    <h3 id="modal-title">Adicionar</h3>
+    <div id="modal-fields"></div>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeModal()">Cancelar</button>
+      <button class="modal-confirm" onclick="confirmModal()">Adicionar</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let isEditing = false;
+let currentModal = null;
+
+function toggleEditing() {
+  isEditing = !isEditing;
+  document.body.classList.toggle('editing', isEditing);
+  document.getElementById('edit-toolbar').classList.toggle('visible', isEditing);
+  const fab = document.getElementById('edit-fab');
+  fab.classList.toggle('active', isEditing);
+  fab.innerHTML = isEditing
+    ? '<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg> Sair da edição'
+    : '<svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931z"/></svg> Editar portfólio';
+  document.querySelectorAll('.editable').forEach(el => {
+    el.contentEditable = isEditing ? 'true' : 'false';
+  });
+}
+
+function saveEditing() {
+  toggleEditing();
+}
+function cancelEditing() {
+  toggleEditing();
+}
+
+const modalTemplates = {
+  exp: {
+    title: 'Adicionar experiência',
+    fields: `
+      <label>Cargo</label><input id="f-title" placeholder="ex: Analista de Marketing">
+      <label>Empresa</label><input id="f-sub" placeholder="ex: Empresa Ltda">
+      <label>Período</label><input id="f-meta" placeholder="ex: 2023 – atual">
+      <label>Descrição</label><textarea id="f-desc" placeholder="Atividades e resultados..."></textarea>
+      <label>Pilar</label>
+      <select id="f-pillar">
+        <option value="p-comunic">Comunicação & Conteúdo</option>
+        <option value="p-impacto">Impacto & Propósito</option>
+        <option value="p-gestao">Gestão & Estratégia</option>
+        <option value="p-produto">Produto & Experiência</option>
+      </select>`,
+    list: 'exp-list',
+    build: () => {
+      const t = document.getElementById('f-title').value || 'Cargo';
+      const s = document.getElementById('f-sub').value || 'Empresa';
+      const m = document.getElementById('f-meta').value || 'período';
+      const d = document.getElementById('f-desc').value || '';
+      const p = document.getElementById('f-pillar').value;
+      const labels = { 'p-comunic': 'Comunicação & Conteúdo', 'p-impacto': 'Impacto & Propósito', 'p-gestao': 'Gestão & Estratégia', 'p-produto': 'Produto & Experiência' };
+      return `<div class="exp-item visible" style="position:relative"><button class="remove-exp-btn" onclick="this.closest('.exp-item').remove()">remover</button><div class="exp-meta"><div class="exp-period editable" contenteditable="true">${m}</div><div class="exp-company editable" contenteditable="true">${s}</div></div><div class="exp-content"><div class="exp-title editable" contenteditable="true">${t}</div>${d ? `<div class="exp-desc editable" contenteditable="true">${d}</div>` : ''}<span class="pillar-tag ${p}">${labels[p]}</span></div></div>`;
+    }
+  },
+  edu: {
+    title: 'Adicionar formação',
+    fields: `
+      <label>Curso</label><input id="f-title" placeholder="ex: Graduação em Design">
+      <label>Instituição</label><input id="f-sub" placeholder="ex: Universidade">
+      <label>Ano</label><input id="f-meta" placeholder="ex: 2020">`,
+    list: 'edu-list',
+    build: () => {
+      const t = document.getElementById('f-title').value || 'Curso';
+      const s = document.getElementById('f-sub').value || 'Instituição';
+      const m = document.getElementById('f-meta').value || '';
+      return `<div class="edu-card visible" style="position:relative"><button class="remove-card-btn" onclick="this.closest('.edu-card').remove()">remover</button><div class="edu-year editable" contenteditable="true">${m}</div><div class="edu-course editable" contenteditable="true">${t}</div><div class="edu-inst editable" contenteditable="true">${s}</div></div>`;
+    }
+  },
+  skill: {
+    title: 'Adicionar competência',
+    fields: `
+      <label>Nome</label><input id="f-title" placeholder="ex: Power BI">
+      <label>Nível (0–100)</label><input id="f-level" type="range" min="10" max="100" value="75">`,
+    list: 'skill-list',
+    build: () => {
+      const t = document.getElementById('f-title').value || 'Competência';
+      const l = document.getElementById('f-level').value;
+      return `<div class="skill-item visible"><div class="skill-name editable" contenteditable="true">${t}</div><div class="skill-bar-bg"><div class="skill-bar" style="width:${l}%"></div></div></div>`;
+    }
+  }
+};
+
+function openModal(type) {
+  currentModal = type;
+  const tmpl = modalTemplates[type];
+  document.getElementById('modal-title').textContent = tmpl.title;
+  document.getElementById('modal-fields').innerHTML = tmpl.fields;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  currentModal = null;
+}
+
+function confirmModal() {
+  if (!currentModal) return;
+  const tmpl = modalTemplates[currentModal];
+  document.getElementById(tmpl.list).insertAdjacentHTML('beforeend', tmpl.build());
+  closeModal();
+}
+
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if (e.target === document.getElementById('modal-overlay')) closeModal();
+});
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      const bar = entry.target.querySelector('.skill-bar');
+      if (bar) {
+        setTimeout(() => { bar.style.width = bar.dataset.w + '%'; }, 100);
+      }
+    }
+  });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.exp-item, .edu-card, .skill-item').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
