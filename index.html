@@ -428,10 +428,12 @@
   }
 .logo-chip {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 80px;
-    padding: 14px 24px;
+    gap: 8px;
+    height: auto;
+    padding: 16px 24px;
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
@@ -445,9 +447,9 @@
     box-shadow: 0 4px 16px rgba(200,86,58,0.10);
   }
 .logo-chip img {
-    height: 48px;
+    height: 64px;
     width: auto;
-    max-width: 160px;
+    max-width: 200px;
     object-fit: contain;
     filter: grayscale(1);
     opacity: 0.65;
@@ -468,7 +470,14 @@
     justify-content: center;
   }
   .logo-chip:hover .logo-fallback { color: var(--accent); }
-
+.logo-chip-name {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--ink3);
+    text-align: center;
+    transition: color 0.18s;
+}
+.logo-chip:hover .logo-chip-name { color: var(--accent); }
   .exp-item { scroll-margin-top: 80px; }
 
   /* scroll animation delays */
@@ -574,25 +583,30 @@
     <div class="section-label">Experiência</div>
 
     <!-- LOGOS STRIP -->
-<div class="logos-strip">
-  <a class="logo-chip" href="#exp-tsn" title="Agência TSN">
+<a class="logo-chip" href="#exp-tsn" title="Agência TSN">
     <img src="logo-tsn.png" alt="Agência TSN">
-  </a>
-  <a class="logo-chip" href="#exp-inhaus" title="Agência InHaus">
+    <span class="logo-chip-name">Agência TSN</span>
+</a>
+<a class="logo-chip" href="#exp-inhaus" title="Agência InHaus">
     <img src="logo-inhaus.png" alt="Agência InHaus">
-  </a>
-  <a class="logo-chip" href="#exp-casasbahia" title="Grupo Casas Bahia">
+    <span class="logo-chip-name">Agência InHaus</span>
+</a>
+<a class="logo-chip" href="#exp-casasbahia" title="Grupo Casas Bahia">
     <img src="logo-casasbahia.png" alt="Grupo Casas Bahia">
-  </a>
-  <a class="logo-chip" href="#exp-ios" title="Instituto Percorre">
+    <span class="logo-chip-name">Grupo Casas Bahia</span>
+</a>
+<a class="logo-chip" href="#exp-ios" title="Instituto Percorre">
     <img src="logo-Percorre.png" alt="Instituto Percorre">
-  </a>
-  <a class="logo-chip" href="#exp-eotica" title="eÓtica">
+    <span class="logo-chip-name">Instituto Percorre</span>
+</a>
+<a class="logo-chip" href="#exp-eotica" title="eÓtica">
     <img src="Logo-eotica.png" alt="eÓtica">
-  </a>
-  <a class="logo-chip" href="#exp-privalia" title="Privalia">
+    <span class="logo-chip-name">eÓtica</span>
+</a>
+<a class="logo-chip" href="#exp-privalia" title="Privalia">
     <img src="Logo-Privalia.png" alt="Privalia">
-  </a>
+    <span class="logo-chip-name">Privalia</span>
+</a>
       <a class="logo-chip" href="#exp-ibmoda" title="Ibmoda">
         <img src="https://logo.clearbit.com/ibmoda.com.br" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Ibmoda">
         <span class="logo-fallback" style="display:none">Ibmoda</span>
