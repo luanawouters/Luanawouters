@@ -418,22 +418,21 @@
     header { padding: 3rem 0 2.5rem; }
   }
 
-  /* ── LOGOS STRIP ── */
-.logos-strip {
+/* ── LOGOS STRIP ── */
+  .logos-strip {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 12px;
     margin-bottom: 2.5rem;
-    align-items: stretch;
-}
-.logo-chip {
-    display: flex;
+    align-items: flex-start;
+  }
+  .logo-chip {
+    display: inline-flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    height: auto;
     padding: 16px 24px;
     background: var(--surface);
     border: 1px solid var(--border);
@@ -441,13 +440,14 @@
     text-decoration: none;
     transition: border-color 0.18s, transform 0.18s, box-shadow 0.18s;
     flex-shrink: 0;
+    width: auto;
   }
   .logo-chip:hover {
     border-color: var(--accent);
     transform: translateY(-2px);
-    box-shadow: 0 4px 16px rgba(200,86,58,0.10);
+    box-shadow: 0 4px 16px rgba(184,137,42,0.10);
   }
-.logo-chip img {
+  .logo-chip img {
     height: 64px;
     width: auto;
     max-width: 200px;
@@ -467,18 +467,19 @@
     font-weight: 500;
     color: var(--ink2);
     white-space: nowrap;
+    display: flex;
     align-items: center;
     justify-content: center;
   }
-  .logo-chip:hover .logo-fallback { color: var(--accent); }
-.logo-chip-name {
+  .logo-chip-name {
     font-size: 11px;
     font-weight: 500;
     color: var(--ink3);
     text-align: center;
     transition: color 0.18s;
-}
-.logo-chip:hover .logo-chip-name { color: var(--accent); }
+  }
+  .logo-chip:hover .logo-fallback { color: var(--accent); }
+  .logo-chip:hover .logo-chip-name { color: var(--accent); }
   .exp-item { scroll-margin-top: 80px; }
 
   /* scroll animation delays */
